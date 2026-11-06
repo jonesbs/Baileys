@@ -40,21 +40,15 @@ export class WebSocketClient extends AbstractSocketClient {
 		}
 	}
 
-	async close() {
+	close() {
 		if (!this.socket) {
 			return
 		}
 
-		const closePromise = new Promise<void>(resolve => {
-			this.socket?.once('close', resolve)
-		})
-
 		this.socket.close()
-
-		await closePromise
-
 		this.socket = null
 	}
+	
 	send(str: string | Uint8Array, cb?: (err?: Error) => void): boolean {
 		this.socket?.send(str, cb)
 
